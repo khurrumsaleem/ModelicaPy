@@ -7,12 +7,15 @@ Created on Fri Aug  2 13:45:08 2024
 import pandas as pd
 import os
 
-def convert_csv_to_txt(filename):
+def convert_csv_to_txt(filename, exclude_first_col=True):
     # Read the csv
     df = pd.read_csv(filename)
     
     # Get columns names
     column_names = list(df.columns)
+    if exclude_first_col:
+        column_names = column_names[1:]
+        df = df.iloc[:, 1:]
     
     # Write DataFrame to text file in the required format
     with open(list(os.path.splitext(filename))[0] + '.txt', 'w') as fil:
